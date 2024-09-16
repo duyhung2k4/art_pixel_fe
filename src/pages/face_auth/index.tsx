@@ -10,25 +10,27 @@ const FaceAuth: React.FC = () => {
     const [ws, setWs] = useState<WebSocket | null>(null);
     const [load, setLoad] = useState<boolean>(false);
 
-    useEffect(() => {
-        const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/auth`);
-        
-        ws.onopen = () => {
-            console.log("cc")
-            setWs(ws);
+    const uuid = Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING);
 
-            ws.onmessage = (data) => {
-                console.log(data.data);
-                setLoad(false);
-            }
+    useEffect(() => {
+        if(!uuid) return;
+        const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/auth?uuid=${uuid}`);
+        
+        setWs(ws);
+
+        ws.onmessage = (data) => {
+            console.log(data.data);
+            setLoad(false);
         }
-    }, []);
+    }, [uuid]);
 
     const sendMessage = (dataBase64: string) => {
         if (!ws) return
 
         const imageBase64 = dataBase64.split(",")[1];
         if (!imageBase64) return
+
+        console.log("send");
 
         ws.send(JSON.stringify({
             type: "send_file_auth_face",
@@ -93,7 +95,7 @@ const FaceAuth: React.FC = () => {
 
         const cap = setInterval(() => {
             captureFrameAsImage();
-        }, 100);
+        }, 5000);
 
         return () => {
             clearInterval(cap);
