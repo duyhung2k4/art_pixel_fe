@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { TOKEN_TYPE } from "@/model/variable";
 import { Stack } from "@mantine/core";
 import { useSendFileAuthMutation } from "@/redux/api/auth.api";
+import { useNavigate } from "react-router";
+import { ROUTER } from "@/constant/router";
 
 
 
@@ -13,6 +15,7 @@ const FaceAuth: React.FC = () => {
 
     const uuid = Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING);
     const [post] = useSendFileAuthMutation();
+    const navigation = useNavigate();
 
     useEffect(() => {
         if(!uuid) return;
@@ -22,6 +25,9 @@ const FaceAuth: React.FC = () => {
 
         ws.onmessage = (data) => {
             console.log(data.data);
+            if(data.data === "done") {
+                navigation(ROUTER.ACCEPT_CODE.href);
+            }
             setLoad(false);
         }
     }, [uuid]);
@@ -98,7 +104,7 @@ const FaceAuth: React.FC = () => {
 
         const cap = setInterval(() => {
             captureFrameAsImage();
-        }, 5000);
+        }, 1000);
 
         return () => {
             clearInterval(cap);
