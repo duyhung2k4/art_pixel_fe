@@ -21,6 +21,13 @@ export const HEADER = {
             accept: 'application/json',
             Authorization: `Bearer ${token}`,
         }
+    },
+    authHeader: () => {
+        const token = Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING);
+        return {
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        }
     }
 }
 
@@ -30,6 +37,11 @@ export const endPoint = {
             url: "api/v1/auth/register",
             method: "POST",
             headers: HEADER.defaultHeader(),
+        }),
+        sendFileAuth: () => ({
+            url: "api/v1/auth/send-file-auth",
+            method: "POST",
+            headers: HEADER.authHeader(),
         }),
     },
 }

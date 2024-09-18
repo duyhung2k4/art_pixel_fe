@@ -3,3 +3,7 @@ export type RegisterRequest = {
     lastName: string
     email: string
 }
+
+export type SendFileAuthRequest = {
+    data: string
+}

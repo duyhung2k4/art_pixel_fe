@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 import { TOKEN_TYPE } from "@/model/variable";
 import { Stack } from "@mantine/core";
+import { useSendFileAuthMutation } from "@/redux/api/auth.api";
 
 
 
@@ -11,6 +12,7 @@ const FaceAuth: React.FC = () => {
     const [load, setLoad] = useState<boolean>(false);
 
     const uuid = Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING);
+    const [post] = useSendFileAuthMutation();
 
     useEffect(() => {
         if(!uuid) return;
@@ -24,22 +26,23 @@ const FaceAuth: React.FC = () => {
         }
     }, [uuid]);
 
-    const sendMessage = (dataBase64: string) => {
-        if (!ws) return
+    const sendMessage = async (dataBase64: string) => {
+        // if (!ws) return
+        const result = await post({ data: dataBase64 });
 
-        const imageBase64 = dataBase64.split(",")[1];
-        if (!imageBase64) return
+        // const imageBase64 = dataBase64.split(",")[1];
+        // if (!imageBase64) return
 
-        console.log("send");
+        // console.log("send");
 
-        ws.send(JSON.stringify({
-            type: "send_file_auth_face",
-            auth: Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING),
-            data: {
-                data: imageBase64,
-            },
-        }));
-        setLoad(true);
+        // ws.send(JSON.stringify({
+        //     type: "send_file_auth_face",
+        //     auth: Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING),
+        //     data: {
+        //         data: imageBase64,
+        //     },
+        // }));
+        // setLoad(true);
     }
 
 
