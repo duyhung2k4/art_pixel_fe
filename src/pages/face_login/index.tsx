@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 import { TOKEN_TYPE } from "@/model/variable";
 import { Stack } from "@mantine/core";
-import { useSendFileAuthMutation } from "@/redux/api/auth.api";
+import { useCreateSocketAuthFaceMutation, useFaceLoginMutation } from "@/redux/api/auth.api";
 import { useNavigate } from "react-router";
 import { ROUTER } from "@/constant/router";
 
@@ -13,13 +13,14 @@ const FaceAuth: React.FC = () => {
     const [ws, setWs] = useState<WebSocket | null>(null);
     const [_, setLoad] = useState<boolean>(false);
 
-    const uuid = Cookies.get(TOKEN_TYPE.PROFILE_UUID_PENDING);
-    const [post] = useSendFileAuthMutation();
+    const uuid = Cookies.get(TOKEN_TYPE.SOCKET_AUTH);
+    const [post] = useFaceLoginMutation();
+    const [create] = useCreateSocketAuthFaceMutation();
     const navigation = useNavigate();
 
     useEffect(() => {
         if(!uuid) return;
-        const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/auth?uuid=${uuid}`);
+        const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/login?uuid=${uuid}`);
         
         setWs(ws);
 
@@ -51,6 +52,18 @@ const FaceAuth: React.FC = () => {
         // setLoad(true);
     }
 
+    const createSocket = async () => {
+        const result = await create(null);
+        if ("error" in result) {
+            console.log(result);
+            return;
+        }
+        if(!result.data.data) {
+            return;
+        }
+
+        Cookies.set(TOKEN_TYPE.SOCKET_AUTH, result.data.data);
+    }
 
 
 
@@ -111,6 +124,9 @@ const FaceAuth: React.FC = () => {
         }
     }, [ws]);
 
+    useEffect(() => {
+        createSocket();
+    }, [])
 
 
     if (!ws) {

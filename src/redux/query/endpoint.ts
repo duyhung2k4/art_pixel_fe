@@ -28,6 +28,13 @@ export const HEADER = {
             accept: 'application/json',
             Authorization: `Bearer ${token}`,
         }
+    },
+    createSocket: () => {
+        const token = Cookies.get(TOKEN_TYPE.SOCKET_AUTH);
+        return {
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        }
     }
 }
 
@@ -43,5 +50,15 @@ export const endPoint = {
             method: "POST",
             headers: HEADER.authHeader(),
         }),
+        createSocketAuthFace: () => ({
+            url: "api/v1/auth/create-socket-auth-face",
+            method: "POST",
+            headers: HEADER.authHeader(),
+        }),
+        faceLogin: () => ({
+            url: "api/v1/auth/auth-face",
+            method: "POST",
+            headers: HEADER.createSocket(),
+        })
     },
 }

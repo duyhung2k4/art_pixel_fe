@@ -7,3 +7,7 @@ export type RegisterRequest = {
 export type SendFileAuthRequest = {
     data: string
 }
+
+export type FaceLoginRequest = {
+    data: string
+}

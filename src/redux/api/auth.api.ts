@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { axiosBaseQuery } from "../query/baseQuery";
 import { endPoint } from "../query/endpoint";
 import { QueryReturnType } from "@/dto/base";
-import { RegisterRequest, SendFileAuthRequest } from "@/dto/request/auth";
+import { FaceLoginRequest, RegisterRequest, SendFileAuthRequest } from "@/dto/request/auth";
 import { RegisterResponse } from "@/dto/response/auth";
 
 
@@ -23,10 +23,24 @@ export const authApi = createApi({
                 data: payload,
             }),
         }),
+        faceLogin: builder.mutation<QueryReturnType<null>, FaceLoginRequest>({
+            query: (payload) => ({
+                ...endPoint.auth.faceLogin(),
+                data: payload,
+            }),
+        }),
+        createSocketAuthFace: builder.mutation<QueryReturnType<string>, null>({
+            query: (payload) => ({
+                ...endPoint.auth.createSocketAuthFace(),
+                data: payload,
+            }),
+        }),
     })
 });
 
 export const {
     useRegisterMutation,
     useSendFileAuthMutation,
+    useFaceLoginMutation,
+    useCreateSocketAuthFaceMutation,
 } = authApi;
