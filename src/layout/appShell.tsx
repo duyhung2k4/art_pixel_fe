@@ -78,10 +78,7 @@ const AppshellLayout: React.FC = () => {
             }}
         >
             <AppShell
-                header={{
-                    height: 60,
-                }}
-                padding="md"
+                padding={0}
             >
                 <AppShell.Main>
                     {outlet}
