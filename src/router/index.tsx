@@ -13,6 +13,7 @@ import {
     PageNotFound,
     PageAcceptCode,
     PageFaceLogin,
+    PageSaveProcess,
 } from "./lazy";
 import { ROUTER } from "@/constant/router";
 
@@ -28,6 +29,7 @@ const AppRouter: React.FC = () => {
                 <Route path={ROUTER.FACE_AUTH.href} element={<PageFaceAuth />} />
                 <Route path={ROUTER.ACCEPT_CODE.href} element={<PageAcceptCode />} />
                 <Route path={ROUTER.FACE_LOGIN.href} element={<PageFaceLogin />} />
+                <Route path={ROUTER.SAVE_PROCESS.href} element={<PageSaveProcess />} />
 
                 <Route element={<ProtectedLayout />}>
                     <Route element={<AppshellLayout />}>

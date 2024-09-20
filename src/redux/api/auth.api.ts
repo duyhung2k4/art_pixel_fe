@@ -35,6 +35,17 @@ export const authApi = createApi({
                 data: payload,
             }),
         }),
+        acceptCode: builder.mutation<QueryReturnType<null>, string>({
+            query: (payload) => ({
+                ...endPoint.auth.acceptCode(),
+                data: { code: payload },
+            }),
+        }),
+        saveProcess: builder.mutation<QueryReturnType<null>, null>({
+            query: () => ({
+                ...endPoint.auth.saveProcess(),
+            }),
+        }),
     })
 });
 
@@ -43,4 +54,6 @@ export const {
     useSendFileAuthMutation,
     useFaceLoginMutation,
     useCreateSocketAuthFaceMutation,
+    useAcceptCodeMutation,
+    useSaveProcessMutation,
 } = authApi;

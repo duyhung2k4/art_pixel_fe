@@ -26,7 +26,7 @@ const FaceAuth: React.FC = () => {
         ws.onmessage = (data) => {
             console.log(data.data);
             if(data.data === "done") {
-                navigation(ROUTER.ACCEPT_CODE.href);
+                navigation(ROUTER.SAVE_PROCESS.href);
             }
             setLoad(false);
         }
@@ -104,7 +104,7 @@ const FaceAuth: React.FC = () => {
 
         const cap = setInterval(() => {
             captureFrameAsImage();
-        }, 1000);
+        }, 500);
 
         return () => {
             clearInterval(cap);

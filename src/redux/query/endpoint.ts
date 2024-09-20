@@ -59,6 +59,16 @@ export const endPoint = {
             url: "api/v1/auth/auth-face",
             method: "POST",
             headers: HEADER.createSocket(),
-        })
+        }),
+        acceptCode: () => ({
+            url: "api/v1/auth/accept-code",
+            method: "POST",
+            headers: HEADER.authHeader(),
+        }),
+        saveProcess: () => ({
+            url: "api/v1/auth/save-process",
+            method: "POST",
+            headers: HEADER.authHeader(),
+        }),
     },
 }
