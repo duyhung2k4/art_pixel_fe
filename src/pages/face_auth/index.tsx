@@ -18,14 +18,14 @@ const FaceAuth: React.FC = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        if(!uuid) return;
+        if (!uuid) return;
         const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/auth?uuid=${uuid}`);
-        
+
         setWs(ws);
 
         ws.onmessage = (data) => {
             console.log(data.data);
-            if(data.data === "done") {
+            if (data.data === "done") {
                 navigation(ROUTER.SAVE_PROCESS.href);
             }
             setLoad(false);
@@ -136,8 +136,30 @@ const FaceAuth: React.FC = () => {
     return (
         <>
             <Stack h={"100vh"} justify="center" align="center">
-                <div style={{ width: "60%" }}>
-                    <video ref={videoRef} autoPlay playsInline style={{ width: "100%", transform: "scaleX(-1)" }} />
+                <div
+                    style={{
+                        overflow: "hidden",
+                        height: 400,
+                        width: 400,
+                        borderRadius: "50%", // Tạo hình tròn
+                        position: "relative", // Để sử dụng vị trí tương đối cho canvas
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                >
+                    <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover", // Đảm bảo video lấp đầy khung
+                            borderRadius: "50%", // Tạo hình tròn cho video
+                            transform: "scaleX(-1)"
+                        }}
+                    />
                     <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
                 </div>
             </Stack>
