@@ -120,7 +120,7 @@ const FaceAuth: React.FC = () => {
 
         const cap = setInterval(() => {
             captureFrameAsImage();
-        }, 500);
+        }, 1000);
 
         return () => {
             clearInterval(cap);
