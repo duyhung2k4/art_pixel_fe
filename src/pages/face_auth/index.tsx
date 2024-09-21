@@ -65,11 +65,27 @@ const FaceAuth: React.FC = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
 
-        if (ctx) {
-            ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-            const imageDataUrl = canvas.toDataURL("image/png");
-            sendMessage(imageDataUrl);
-        }
+        if (!ctx) return;
+
+        // Đặt kích thước canvas bằng với kích thước video
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+
+        // Tính toán đường kính và bán kính
+        const diameter = Math.min(canvas.width, canvas.height);
+        const radius = diameter / 2;
+
+        // Vẽ hình tròn
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+        ctx.clip(); // Cắt canvas theo hình tròn
+
+        // Vẽ video lên canvas
+        ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+        // Lấy hình ảnh từ canvas dưới dạng base64
+        const imageDataUrl = canvas.toDataURL("image/png");
+        sendMessage(imageDataUrl); // Gửi hình ảnh đến server
     };
 
     useEffect(() => {
