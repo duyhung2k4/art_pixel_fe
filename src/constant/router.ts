@@ -13,6 +13,7 @@ export type FieldRouter =
     | "ACCEPT_CODE"
     | "FACE_LOGIN"
     | "SAVE_PROCESS"
+    | "EVENT"
 export const ROUTER: Record<FieldRouter, ObjectRouter> = {
     LOGIN: {
         href: "/login",
@@ -47,5 +48,10 @@ export const ROUTER: Record<FieldRouter, ObjectRouter> = {
         href: "/save-process",
         type: "protected",
         name: "Lưu tiến trình",
+    },
+    EVENT: {
+        href: "/event",
+        type: "protected",
+        name: "Sự kiện",
     }
 }

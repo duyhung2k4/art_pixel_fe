@@ -13,23 +13,29 @@ const FaceAuth: React.FC = () => {
     const [ws, setWs] = useState<WebSocket | null>(null);
     const [_, setLoad] = useState<boolean>(false);
 
+    const navigation = useNavigate();
+
     const uuid = Cookies.get(TOKEN_TYPE.SOCKET_AUTH);
     const [post] = useFaceLoginMutation();
     const [create] = useCreateSocketAuthFaceMutation();
-    const navigation = useNavigate();
 
     useEffect(() => {
         if (!uuid) return;
         const ws = new WebSocket(`${import.meta.env.VITE_ART_PIXEL_SOCKET}/login?uuid=${uuid}`);
-
         setWs(ws);
 
         ws.onmessage = (data) => {
-            console.log(data.data);
-            if (data.data === "done") {
-                navigation(ROUTER.ACCEPT_CODE.href);
+            const result = JSON.parse(data.data);
+            if(result.error === null) {
+                Cookies.set(TOKEN_TYPE.ACCESS_TOKEN, result.data.accessToken, { expires: 1 });
+                Cookies.set(TOKEN_TYPE.REFRESH_TOKEN, result.data.refreshToken, { expires: 3 });
+                ws.close();
+                navigation(ROUTER.EVENT.href);
+                return;
             }
+
             setLoad(false);
+            captureFrameAsImage();
         }
     }, [uuid]);
 
@@ -112,6 +118,7 @@ const FaceAuth: React.FC = () => {
 
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
+                    captureFrameAsImage();
                 }
             } catch (error) {
                 console.error("Lỗi khi truy cập camera:", error);
@@ -128,21 +135,21 @@ const FaceAuth: React.FC = () => {
         };
     }, [ws]);
 
-    useEffect(() => {
-        if (!ws) return;
+    // useEffect(() => {
+    //     if (!ws) return;
 
-        const cap = setInterval(() => {
-            captureFrameAsImage();
-        }, 500);
+    //     const cap = setInterval(() => {
+    //         captureFrameAsImage();
+    //     }, 500);
 
-        return () => {
-            clearInterval(cap);
-        }
-    }, [ws]);
+    //     return () => {
+    //         clearInterval(cap);
+    //     }
+    // }, [ws]);
 
     useEffect(() => {
         createSocket();
-    }, [])
+    }, []);
 
 
     if (!ws) {

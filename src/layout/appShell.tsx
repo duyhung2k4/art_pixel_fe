@@ -49,12 +49,12 @@ const AppshellLayout: React.FC = () => {
 
         if (!token) {
             return [
-                ROUTER.HOME,
+                ROUTER.EVENT,
             ]
         }
 
         return [
-            ROUTER.HOME,
+            ROUTER.EVENT,
         ]
     }, [Cookies.get(TOKEN_TYPE.ACCESS_TOKEN)]);
 

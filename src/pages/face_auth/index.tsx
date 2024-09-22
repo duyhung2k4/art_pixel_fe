@@ -29,6 +29,7 @@ const FaceAuth: React.FC = () => {
                 navigation(ROUTER.SAVE_PROCESS.href);
             }
             setLoad(false);
+            captureFrameAsImage();
         }
     }, [uuid]);
 
@@ -99,6 +100,7 @@ const FaceAuth: React.FC = () => {
 
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
+                    captureFrameAsImage();
                 }
             } catch (error) {
                 console.error("Lỗi khi truy cập camera:", error);
@@ -115,17 +117,17 @@ const FaceAuth: React.FC = () => {
         };
     }, [ws]);
 
-    useEffect(() => {
-        if (!ws) return;
+    // useEffect(() => {
+    //     if (!ws) return;
 
-        const cap = setInterval(() => {
-            captureFrameAsImage();
-        }, 500);
+    //     const cap = setInterval(() => {
+    //         captureFrameAsImage();
+    //     }, 500);
 
-        return () => {
-            clearInterval(cap);
-        }
-    }, [ws]);
+    //     return () => {
+    //         clearInterval(cap);
+    //     }
+    // }, [ws]);
 
 
 
