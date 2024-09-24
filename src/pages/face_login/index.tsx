@@ -26,9 +26,11 @@ const FaceAuth: React.FC = () => {
 
         ws.onmessage = (data) => {
             const result = JSON.parse(data.data);
+            console.log(result);
             if(result.error === null) {
                 Cookies.set(TOKEN_TYPE.ACCESS_TOKEN, result.data.accessToken, { expires: 1 });
                 Cookies.set(TOKEN_TYPE.REFRESH_TOKEN, result.data.refreshToken, { expires: 3 });
+                Cookies.remove(TOKEN_TYPE.SOCKET_AUTH);
                 ws.close();
                 navigation(ROUTER.EVENT.href);
                 return;

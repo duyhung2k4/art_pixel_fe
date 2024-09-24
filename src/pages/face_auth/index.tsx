@@ -117,23 +117,12 @@ const FaceAuth: React.FC = () => {
         };
     }, [ws]);
 
-    // useEffect(() => {
-    //     if (!ws) return;
-
-    //     const cap = setInterval(() => {
-    //         captureFrameAsImage();
-    //     }, 500);
-
-    //     return () => {
-    //         clearInterval(cap);
-    //     }
-    // }, [ws]);
-
-
 
     if (!ws) {
         return (<>Not ws</>)
     }
+
+    
 
     return (
         <>

@@ -8,6 +8,7 @@ export const PageAcceptCode = lazy(() => import("@/pages/accept_code"));
 export const PageFaceLogin = lazy(() => import("@/pages/face_login"));
 export const PageSaveProcess = lazy(() => import("@/pages/save_process"));
 export const PageHome = lazy(() => import("@/pages/home"));
+export const PageDrawPixel = lazy(() => import("@/pages/draw_pixel"));
 
 // protected page
 export const PageEvent = lazy(() => import("@/pages/events"));

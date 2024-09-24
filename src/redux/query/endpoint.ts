@@ -71,4 +71,11 @@ export const endPoint = {
             headers: HEADER.authHeader(),
         }),
     },
+    event: {
+        getAllEvent: () => ({
+            url: "api/v1/event/all",
+            method: "GET",
+            headers: HEADER.protectedHeader(),
+        })
+    }
 }

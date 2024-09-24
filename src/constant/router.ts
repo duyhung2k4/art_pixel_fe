@@ -14,6 +14,7 @@ export type FieldRouter =
     | "FACE_LOGIN"
     | "SAVE_PROCESS"
     | "EVENT"
+    | "DRAW_PIXEL"
 export const ROUTER: Record<FieldRouter, ObjectRouter> = {
     LOGIN: {
         href: "/login",
@@ -53,5 +54,10 @@ export const ROUTER: Record<FieldRouter, ObjectRouter> = {
         href: "/event",
         type: "protected",
         name: "Sự kiện",
+    },
+    DRAW_PIXEL: {
+        href: "/draw-pixel",
+        type: "protected",
+        name: "Vẽ pixel",
     }
 }

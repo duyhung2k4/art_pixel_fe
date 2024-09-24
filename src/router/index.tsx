@@ -14,6 +14,7 @@ import {
     PageFaceLogin,
     PageSaveProcess,
     PageEvent,
+    PageDrawPixel,
 } from "./lazy";
 import { ROUTER } from "@/constant/router";
 
@@ -35,6 +36,7 @@ const AppRouter: React.FC = () => {
                 <Route element={<ProtectedLayout />}>
                     <Route element={<AppshellLayout />}>
                         <Route path={ROUTER.EVENT.href} element={<PageEvent />} />
+                        <Route path={`${ROUTER.DRAW_PIXEL.href}/:id`} element={<PageDrawPixel />} />
                     </Route>
                 </Route>
 
