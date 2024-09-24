@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { TOKEN_TYPE } from "@/model/variable";
 import { useParams } from "react-router";
+import { Button } from "@mantine/core";
 
 
 
@@ -18,13 +19,15 @@ const DrawPixel: React.FC = () => {
         setWs(ws);
 
         ws.onmessage = (data) => {
-            const result = JSON.parse(data.data);
-            console.log(result);
+            console.log(data.data);
         }
     }, [accessToken, id]);
 
     return (
-        <>DrawPixel</>
+        <>
+            DrawPixel
+            <Button>Draw</Button>
+        </>
     )
 }
 
