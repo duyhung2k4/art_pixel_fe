@@ -26,7 +26,9 @@ const FaceAuth: React.FC = () => {
         ws.onmessage = (data) => {
             console.log(data.data);
             if (data.data === "done") {
-                navigation(ROUTER.SAVE_PROCESS.href);
+                setTimeout(() => {
+                    navigation(ROUTER.SAVE_PROCESS.href);
+                }, 2000)
             }
             setLoad(false);
             captureFrameAsImage();
